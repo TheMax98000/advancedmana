@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 import com.tomokisan.advancedmana.block.ManaDetectorBlock;
 import com.tomokisan.advancedmana.block.entity.ManaDetectorBlockEntity;
+import com.tomokisan.advancedmana.integration.ComputerCraftIntegration;
 
 import net.minecraft.block.entity.BlockEntityType;
 
@@ -55,6 +56,9 @@ public class AdvancedMana implements ModInitializer {
             new Identifier(MOD_ID, "mana_detector"),
             MANA_DETECTOR_ITEM
         );
+        
+        // Intégration avec CC:Tweaked
+        ComputerCraftIntegration.init();
         
         System.out.println("Advanced Mana mod initialized!");
     }

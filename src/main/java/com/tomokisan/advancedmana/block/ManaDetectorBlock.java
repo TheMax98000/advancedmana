@@ -1,6 +1,5 @@
 package com.tomokisan.advancedmana.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
