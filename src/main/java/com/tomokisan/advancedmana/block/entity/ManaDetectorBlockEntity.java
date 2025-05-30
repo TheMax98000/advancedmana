@@ -10,22 +10,25 @@ import com.tomokisan.advancedmana.AdvancedMana;
 import com.tomokisan.advancedmana.util.ManaHelper;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralProvider;
+import org.jetbrains.annotations.Nullable;
 
-public class ManaDetectorBlockEntity extends BlockEntity implements IPeripheralProvider {
+public class ManaDetectorBlockEntity extends BlockEntity {
+    
+    private final ManaDetectorPeripheral peripheral;
     
     public ManaDetectorBlockEntity(BlockPos pos, BlockState state) {
         super(AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY, pos, state);
+        this.peripheral = new ManaDetectorPeripheral(this);
     }
     
-    @Override
-    public IPeripheral getPeripheral(World world, BlockPos pos, Direction side) {
+    // Nouvelle API CC:Tweaked - retourne le périphérique quand demandé
+    @Nullable
+    public IPeripheral getPeripheral(Direction side) {
         // Ne pas fournir de périphérique sur le côté supérieur (où se trouve le bloc à analyser)
         if (side == Direction.UP) {
             return null;
         }
-        
-        return new ManaDetectorPeripheral(this);
+        return peripheral;
     }
     
     /**

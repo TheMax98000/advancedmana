@@ -4,7 +4,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -21,7 +20,7 @@ public class AdvancedMana implements ModInitializer {
     
     // Blocs
     public static final Block MANA_DETECTOR_BLOCK = new ManaDetectorBlock(
-        FabricBlockSettings.of(Material.METAL).strength(2.0f)
+        FabricBlockSettings.create().strength(2.0f).requiresTool()
     );
     
     // Items
