@@ -1,0 +1,132 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+gradle.properties.local
+
+# Minecraft Development Kit & Fabric
+run/
+logs/
+crash-reports/
+.mixin.out/
+remappedSrc/
+cache/
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# IDE - Eclipse
+.metadata/
+.recommenders/
+.settings/
+.project
+.classpath
+bin/
+tmp/
+
+# IDE - VS Code
+.vscode/
+*.code-workspace
+
+# IDE - NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+
+# OS - macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# OS - Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# OS - Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Java
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# Logs
+*.log
+*.log.*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~.nib
+local.properties
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# Minecraft specific
+options.txt
+servers.dat
+usercache.json
+usernamecache.json
+banned-*.json
+ops.json
+whitelist.json
+world/
+
+# Mod development
+src/generated/
+*.launch
+.cache/
+*.pid
+
+# Secrets / Credentials
+secrets.properties
+private.properties
+keystore.jks
+*.p12
+*.pem
+
+# Other
+.directory
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,7 @@
+{
+    "variants": {
+      "": {
+        "model": "advancedmana:block/mana_detector"
+      }
+    }
+  }
