@@ -34,6 +34,18 @@ loom {
     }
 }
 
+// Configuration explicite des sources
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
 dependencies {
     // Fabric
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -52,7 +64,7 @@ dependencies {
 
 processResources {
     inputs.property "version", project.version
-
+    
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
@@ -71,6 +83,10 @@ java {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}"}
+        rename { "${it}_${project.base.archivesName.get()}"}
     }
+}
+
+jar {
+    from sourceSets.main.output
 }
