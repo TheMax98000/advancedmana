@@ -44,8 +44,10 @@ dependencies {
     // ComputerCraft
     modImplementation "cc.tweaked:cc-tweaked-1.20.1-fabric:${project.computercraft_version}"
 
-    // Botania pour l'interface mana (optionnel)
-    modCompileOnly "vazkii.botania:Botania:${project.botania_version}"
+    // Botania pour l'interface mana (optionnel) - sans les dépendances transitives
+    modCompileOnly("vazkii.botania:Botania:${project.botania_version}") {
+        transitive = false
+    }
 }
 
 processResources {
