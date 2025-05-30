@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 
 import com.tomokisan.advancedmana.AdvancedMana;
 import com.tomokisan.advancedmana.util.ManaHelper;
@@ -21,10 +20,9 @@ public class ManaDetectorBlockEntity extends BlockEntity {
         this.peripheral = new ManaDetectorPeripheral(this);
     }
     
-    // Nouvelle API CC:Tweaked - retourne le périphérique quand demandé
     @Nullable
     public IPeripheral getPeripheral(Direction side) {
-        // Ne pas fournir de périphérique sur le côté supérieur (où se trouve le bloc à analyser)
+        // Ne pas fournir de périphérique sur le côté supérieur
         if (side == Direction.UP) {
             return null;
         }

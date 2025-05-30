@@ -41,7 +41,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // ComputerCraft
+    // ComputerCraft - Utilisation de la version Fabric
     modImplementation "cc.tweaked:cc-tweaked-1.20.1-fabric:${project.computercraft_version}"
 
     // Botania pour l'interface mana (optionnel) - sans les dépendances transitives
