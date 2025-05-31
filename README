@@ -1,0 +1,22 @@
+Build manuel jar
+
+# Nettoyer tout
+rm -rf build .gradle
+
+# Compiler
+./gradlew compileJava processResources
+
+# Vérifier que les fichiers sont là
+ls -la build/classes/java/main/com/tomokisan/advancedmana/
+ls -la build/resources/main/
+
+# Créer le JAR manuellement
+cd build
+mkdir -p tmp/META-INF
+echo "Manifest-Version: 1.0" > tmp/META-INF/MANIFEST.MF
+cp -r classes/java/main/* tmp/
+cp -r resources/main/* tmp/
+cd tmp
+jar cf ../libs/advancedmana-manual.jar *
+cd ../..
+jar tf build/libs/advancedmana-manual.jar | head -20
