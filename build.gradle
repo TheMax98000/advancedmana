@@ -14,11 +14,6 @@ repositories {
     maven { url 'https://modmaven.dev' }
 }
 
-loom {
-    // Désactiver la séparation des environnements qui peut causer des problèmes
-    // splitEnvironmentSourceSets()
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -42,18 +37,23 @@ tasks.withType(JavaCompile).configureEach {
     options.release = 17
 }
 
-// Fix pour le JAR vide
+// Désactiver le JAR par défaut
 jar {
-    archiveClassifier = 'dev'
-    from sourceSets.main.output
+    enabled = false
 }
 
-// Le vrai JAR que vous devez utiliser
+// Configurer remapJar pour produire le JAR principal
 remapJar {
-    from sourceSets.main.output
-    inputFile = jar.archiveFile
+    enabled = true
     archiveClassifier = null
 }
 
-// Assurer que build produit le JAR remappé
-build.dependsOn remapJar
+// Faire en sorte que 'build' exécute remapJar
+build {
+    dependsOn remapJar
+}
+
+// Faire en sorte que 'assemble' exécute remapJar
+assemble {
+    dependsOn remapJar
+}
