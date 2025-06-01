@@ -2,16 +2,24 @@ plugins {
     id 'fabric-loom' version '1.3-SNAPSHOT'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+archivesBaseName = project.archives_base_name
 
 repositories {
     maven { url "https://squiddev.cc/maven/" }
     maven { url 'https://modmaven.dev' }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
 }
 
 dependencies {
@@ -27,33 +35,16 @@ dependencies {
 
 processResources {
     inputs.property "version", project.version
-
+    
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.release = 17
+    it.options.release = 17
 }
 
-// Désactiver le JAR par défaut
 jar {
-    enabled = false
-}
-
-// Configurer remapJar pour produire le JAR principal
-remapJar {
-    enabled = true
-    archiveClassifier = null
-}
-
-// Faire en sorte que 'build' exécute remapJar
-build {
-    dependsOn remapJar
-}
-
-// Faire en sorte que 'assemble' exécute remapJar
-assemble {
-    dependsOn remapJar
+    from sourceSets.main.output
 }
