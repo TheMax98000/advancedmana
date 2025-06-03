@@ -17,12 +17,7 @@ public class ModPeripheralProvider {
     public static void register() {
         // Enregistrement du peripheral provider pour Fabric
         PeripheralLookup.get().registerForBlockEntity(
-            (blockEntity, direction) -> {
-                if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
-                    return new ManaDetectorPeripheral(manaDetector);
-                }
-                return null;
-            },
+            (blockEntity, direction) -> new ManaDetectorPeripheral(blockEntity),
             AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY
         );
         
