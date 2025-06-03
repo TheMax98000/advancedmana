@@ -2,20 +2,20 @@ package com.tomokisan.advancedmana.integration.computercraft;
 
 import com.tomokisan.advancedmana.block.entity.ManaDetectorBlockEntity;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralProvider;
+import dan200.computercraft.api.peripheral.PeripheralLookup;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class ManaDetectorPeripheralProvider implements IPeripheralProvider {
+public class ManaDetectorPeripheralProvider {
     
-    @Override
-    public IPeripheral getPeripheral(Level level, BlockPos pos, Direction side) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
-            return manaDetector;
-        }
-        return null;
+    public static void register() {
+        PeripheralLookup.get().registerForBlockEntity((blockEntity, direction) -> {
+            if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
+                return manaDetector;
+            }
+            return null;
+        }, com.tomokisan.advancedmana.AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY);
     }
 }

@@ -128,7 +128,7 @@ public class ManaDetectorBlockEntity extends BlockEntity implements IPeripheral 
     // === CC:Tweaked Peripheral Implementation ===
     
     @Override
-    public String getType() {
+    public String getPeripheralType() {
         return "mana_detector";
     }
     
@@ -140,22 +140,22 @@ public class ManaDetectorBlockEntity extends BlockEntity implements IPeripheral 
     // Méthodes exposées à CC:Tweaked
     
     @LuaFunction
-    public final int getMana() {
+    public final int getManaCC() {
         return this.mana;
     }
     
     @LuaFunction
-    public final int getManaCap() {
+    public final int getManaCapCC() {
         return this.manaCap;
     }
     
     @LuaFunction
-    public final boolean hasValidMana() {
+    public final boolean hasValidManaCC() {
         return this.mana > 0 || this.manaCap > 0;
     }
     
     @LuaFunction
-    public final double getManaPercentage() {
+    public final double getManaPercentageCC() {
         if (this.manaCap <= 0) return 0.0;
         return (double) this.mana / (double) this.manaCap * 100.0;
     }
