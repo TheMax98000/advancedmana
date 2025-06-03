@@ -128,8 +128,8 @@ public class ManaDetectorBlockEntity extends BlockEntity implements IPeripheral 
     // === CC:Tweaked Peripheral Implementation ===
     
     @Override
-    public String getPeripheralType() {
-        return "mana_detector";
+    public Object getTarget() {
+        return this;
     }
     
     @Override

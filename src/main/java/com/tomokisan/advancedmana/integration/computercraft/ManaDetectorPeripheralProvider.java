@@ -12,8 +12,8 @@ public class ManaDetectorPeripheralProvider {
     
     public static void register() {
         PeripheralLookup.get().registerForBlockEntity((blockEntity, direction) -> {
-            if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
-                return manaDetector;
+            if (blockEntity instanceof ManaDetectorBlockEntity) {
+                return (ManaDetectorBlockEntity) blockEntity;
             }
             return null;
         }, com.tomokisan.advancedmana.AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY);
