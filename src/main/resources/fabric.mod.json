@@ -1,36 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "advancedmana",
-  "version": "${version}",
-
-  "name": "Advanced Mana",
-  "description": "A mod that provides mana detection and integration with ComputerCraft",
-  "authors": [
-    "TomokiSan"
-  ],
-  "contact": {},
-
-  "license": "MIT",
-  "icon": "assets/advancedmana/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.tomokisan.advancedmana.AdvancedMana"
-    ],
-    "client": [
-      "com.tomokisan.advancedmana.AdvancedManaClient"
-    ]
-  },
-  "mixins": [],
-
-  "depends": {
-    "fabricloader": ">=0.14.22",
-    "fabric-api": "*",
-    "minecraft": "1.20.1"
-  },
-  "suggests": {
-    "computercraft": "*",
-    "botania": "*"
-  }
+	"schemaVersion": 1,
+	"id": "advanced-mana",
+	"version": "${version}",
+	"name": "Advanced Mana",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Tomokisan"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/advanced-mana/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.tomokisan.advancedmana.AdvancedMana"
+		],
+		"client": [
+			"com.tomokisan.advancedmana.AdvancedManaClient"
+		]
+	},
+	"mixins": [
+		"advanced-mana.mixins.json",
+		{
+			"config": "advanced-mana.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }

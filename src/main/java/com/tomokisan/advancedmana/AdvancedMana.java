@@ -1,65 +1,24 @@
 package com.tomokisan.advancedmana;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
-import com.tomokisan.advancedmana.block.ManaDetectorBlock;
-import com.tomokisan.advancedmana.block.entity.ManaDetectorBlockEntity;
-import com.tomokisan.advancedmana.integration.ComputerCraftIntegration;
-
-import net.minecraft.block.entity.BlockEntityType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdvancedMana implements ModInitializer {
-    public static final String MOD_ID = "advancedmana";
-    
-    // Blocs
-    public static final Block MANA_DETECTOR_BLOCK = new ManaDetectorBlock(
-        FabricBlockSettings.create().strength(2.0f).requiresTool()
-    );
-    
-    // Items
-    public static final Item MANA_DETECTOR_ITEM = new BlockItem(
-        MANA_DETECTOR_BLOCK,
-        new FabricItemSettings()
-    );
-    
-    // Block Entities
-    public static final BlockEntityType<ManaDetectorBlockEntity> MANA_DETECTOR_BLOCK_ENTITY =
-        Registry.register(
-            Registries.BLOCK_ENTITY_TYPE,
-            new Identifier(MOD_ID, "mana_detector"),
-            BlockEntityType.Builder.create(
-                ManaDetectorBlockEntity::new,
-                MANA_DETECTOR_BLOCK
-            ).build(null)
-        );
-    
-    @Override
-    public void onInitialize() {
-        // Enregistrer le bloc
-        Registry.register(
-            Registries.BLOCK,
-            new Identifier(MOD_ID, "mana_detector"),
-            MANA_DETECTOR_BLOCK
-        );
-        
-        // Enregistrer l'item du bloc
-        Registry.register(
-            Registries.ITEM,
-            new Identifier(MOD_ID, "mana_detector"),
-            MANA_DETECTOR_ITEM
-        );
-        
-        // Intégration avec CC:Tweaked
-        ComputerCraftIntegration.init();
-        
-        System.out.println("Advanced Mana mod initialized!");
-    }
+	public static final String MOD_ID = "advanced-mana";
+
+	// This logger is used to write text to the console and the log file.
+	// It is considered best practice to use your mod id as the logger's name.
+	// That way, it's clear which mod wrote info, warnings, and errors.
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+	@Override
+	public void onInitialize() {
+		// This code runs as soon as Minecraft is in a mod-load-ready state.
+		// However, some things (like resources) may still be uninitialized.
+		// Proceed with mild caution.
+
+		LOGGER.info("Hello Fabric world!");
+	}
 }
