@@ -1,8 +1,6 @@
 package com.tomokisan.advancedmana.block.entity;
 
 import com.tomokisan.advancedmana.AdvancedMana;
-import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.lua.LuaFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ManaDetectorBlockEntity extends BlockEntity implements IPeripheral {
+public class ManaDetectorBlockEntity extends BlockEntity {
     
     // Variables pour stocker les données de mana lues
     private int mana = 0;
@@ -125,38 +123,5 @@ public class ManaDetectorBlockEntity extends BlockEntity implements IPeripheral 
         return ClientboundBlockEntityDataPacket.create(this);
     }
     
-    // === CC:Tweaked Peripheral Implementation ===
-    
-    @Override
-    public Object getTarget() {
-        return this;
-    }
-    
-    @Override
-    public boolean equals(IPeripheral other) {
-        return this == other;
-    }
-    
-    // Méthodes exposées à CC:Tweaked
-    
-    @LuaFunction
-    public final int getManaCC() {
-        return this.mana;
-    }
-    
-    @LuaFunction
-    public final int getManaCapCC() {
-        return this.manaCap;
-    }
-    
-    @LuaFunction
-    public final boolean hasValidManaCC() {
-        return this.mana > 0 || this.manaCap > 0;
-    }
-    
-    @LuaFunction
-    public final double getManaPercentageCC() {
-        if (this.manaCap <= 0) return 0.0;
-        return (double) this.mana / (double) this.manaCap * 100.0;
-    }
+    // ComputerCraft integration will be handled via a separate peripheral class
 }
