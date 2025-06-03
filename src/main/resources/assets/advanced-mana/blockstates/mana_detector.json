@@ -1,0 +1,19 @@
+{
+    "variants": {
+      "facing=north": {
+        "model": "advanced-mana:block/mana_detector"
+      },
+      "facing=south": {
+        "model": "advanced-mana:block/mana_detector",
+        "y": 180
+      },
+      "facing=west": {
+        "model": "advanced-mana:block/mana_detector",
+        "y": 270
+      },
+      "facing=east": {
+        "model": "advanced-mana:block/mana_detector",
+        "y": 90
+      }
+    }
+}

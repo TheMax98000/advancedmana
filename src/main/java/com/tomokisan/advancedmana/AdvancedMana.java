@@ -1,6 +1,15 @@
 package com.tomokisan.advancedmana;
 
+import com.tomokisan.advancedmana.block.ManaDetectorBlock;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.Block;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +22,20 @@ public class AdvancedMana implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	// Déclaration du bloc ManaDetector
+	public static final Block MANA_DETECTOR = Registry.register(
+		BuiltInRegistries.BLOCK,
+		new ResourceLocation(MOD_ID, "mana_detector"),
+		new ManaDetectorBlock()
+	);
+
+	// Déclaration de l'item du bloc
+	public static final BlockItem MANA_DETECTOR_ITEM = Registry.register(
+		BuiltInRegistries.ITEM,
+		new ResourceLocation(MOD_ID, "mana_detector"),
+		new BlockItem(MANA_DETECTOR, new FabricItemSettings())
+	);
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -20,5 +43,11 @@ public class AdvancedMana implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("Advanced Mana mod loaded with ManaDetector block!");
+
+		// Ajouter le bloc à l'onglet créatif des blocs fonctionnels
+		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> {
+			content.accept(MANA_DETECTOR_ITEM);
+		});
 	}
 }

@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/cube_bottom_top",
+    "textures": {
+      "top": "advanced-mana:block/mana_detector_top",
+      "bottom": "advanced-mana:block/mana_detector_side",
+      "side": "advanced-mana:block/mana_detector_side"
+    }
+}
