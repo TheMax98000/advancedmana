@@ -1,8 +1,12 @@
 {
-    "parent": "minecraft:block/cube_bottom_top",
+    "parent": "minecraft:block/cube",
     "textures": {
-      "top": "advanced-mana:block/mana_detector_top",
-      "bottom": "advanced-mana:block/mana_detector_side",
-      "side": "advanced-mana:block/mana_detector_side"
+      "north": "advanced-mana:block/mana_detector_top",
+      "south": "advanced-mana:block/mana_detector_side",
+      "east": "advanced-mana:block/mana_detector_side",
+      "west": "advanced-mana:block/mana_detector_side",
+      "up": "advanced-mana:block/mana_detector_side",
+      "down": "advanced-mana:block/mana_detector_side",
+      "particle": "advanced-mana:block/mana_detector_side"
     }
-}
+  }
