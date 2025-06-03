@@ -74,7 +74,7 @@ public class ManaDetectorBlockEntity extends BlockEntity {
             }
             
             // Log pour debug
-            AdvancedMana.LOGGER.info("ManaDetector at {} read: mana={}, manaCap={}", getBlockPos(), mana, manaCap);
+            //AdvancedMana.LOGGER.info("ManaDetector at {} read: mana={}, manaCap={}", getBlockPos(), mana, manaCap);
         }
     }
     

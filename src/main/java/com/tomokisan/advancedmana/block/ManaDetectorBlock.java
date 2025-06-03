@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -77,10 +78,32 @@ public class ManaDetectorBlock extends BaseEntityBlock {
     // Interaction avec le bloc (clic droit)
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        ItemStack heldItem = player.getItemInHand(hand);
+        
+        // Si le joueur tient un item ET fait sneak (Shift+clic), toujours afficher les infos
+        if (player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
+                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+                        "Mana: " + manaDetector.getMana() + 
+                        "/" + manaDetector.getManaCap() + 
+                        " | Valid: " + manaDetector.hasValidMana()
+                    ));
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+        
+        // Si le joueur tient un item (sans Shift), permettre le placement
+        if (!heldItem.isEmpty()) {
+            return InteractionResult.PASS;
+        }
+        
+        // Si mains vides, afficher les infos
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
-                // Afficher les informations de mana lues
                 player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
                     "Mana: " + manaDetector.getMana() + 
                     "/" + manaDetector.getManaCap() + 
@@ -88,6 +111,7 @@ public class ManaDetectorBlock extends BaseEntityBlock {
                 ));
             }
         }
+        
         return InteractionResult.SUCCESS;
     }
 
