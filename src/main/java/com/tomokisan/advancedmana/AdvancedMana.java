@@ -2,6 +2,8 @@ package com.tomokisan.advancedmana;
 
 import com.tomokisan.advancedmana.block.ManaDetectorBlock;
 import com.tomokisan.advancedmana.block.entity.ManaDetectorBlockEntity;
+import com.tomokisan.advancedmana.integration.computercraft.ManaDetectorPeripheralProvider;
+import dan200.computercraft.api.ComputerCraftAPI;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -59,5 +61,10 @@ public class AdvancedMana implements ModInitializer {
 		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> {
 			content.accept(MANA_DETECTOR_ITEM);
 		});
+		
+		// Enregistrer le provider de périphérique CC:Tweaked
+		ComputerCraftAPI.registerPeripheralProvider(new ManaDetectorPeripheralProvider());
+		
+		LOGGER.info("CC:Tweaked peripheral provider registered for ManaDetector!");
 	}
 }

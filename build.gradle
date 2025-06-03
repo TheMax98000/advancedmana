@@ -16,6 +16,14 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	
+	// CC:Tweaked repository (syntaxe officielle)
+	maven {
+		url "https://maven.squiddev.cc"
+		content {
+			includeGroup("cc.tweaked")
+		}
+	}
 }
 
 loom {
@@ -39,6 +47,9 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
+	// CC:Tweaked integration (syntaxe officielle Fabric Loom)
+	modCompileOnly "cc.tweaked:cc-tweaked-1.20.1-fabric-api:1.113.1"
+	modRuntimeOnly "cc.tweaked:cc-tweaked-1.20.1-fabric:1.113.1"
 }
 
 processResources {

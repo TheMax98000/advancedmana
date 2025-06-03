@@ -36,6 +36,7 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"another-mod": "*",
+		"cc-tweaked": ">=1.113.0"
 	}
 }
