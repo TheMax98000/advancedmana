@@ -26,25 +26,29 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
 
 public class ManaDetectorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
-    
-    // Forme légèrement plus petite que le bloc complet pour un effet visuel
-    private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
 
     public ManaDetectorBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.METAL)
                 .strength(3.0F, 6.0F)
-                .requiresCorrectToolForDrops()
-                .noOcclusion());
+                .requiresCorrectToolForDrops());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    // Utiliser la forme complète du bloc pour permettre l'attachement des modems
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return Shapes.block(); // Forme complète 16x16x16
+    }
+
+    // Assurer que les modems peuvent s'attacher sur toutes les faces
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.block(); // Collision complète pour l'attachement
     }
 
     @Override
@@ -55,24 +59,6 @@ public class ManaDetectorBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
-    }
-
-    // Méthode pour détecter la mana - vous pouvez l'implémenter selon vos besoins
-    public boolean detectsMana(BlockGetter world, BlockPos pos) {
-        // Logique de détection de mana à implémenter
-        return false;
-    }
-
-    // Création du BlockEntity
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ManaDetectorBlockEntity(pos, state);
-    }
-
-    // Gestion du ticker pour que le BlockEntity puisse fonctionner
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, com.tomokisan.advancedmana.AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY, ManaDetectorBlockEntity::tick);
     }
 
     // Interaction avec le bloc (clic droit)
@@ -113,6 +99,18 @@ public class ManaDetectorBlock extends BaseEntityBlock {
         }
         
         return InteractionResult.SUCCESS;
+    }
+
+    // Création du BlockEntity
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ManaDetectorBlockEntity(pos, state);
+    }
+
+    // Gestion du ticker pour que le BlockEntity puisse fonctionner
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, com.tomokisan.advancedmana.AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY, ManaDetectorBlockEntity::tick);
     }
 
     // Rendu normal (pas d'entité invisible)
