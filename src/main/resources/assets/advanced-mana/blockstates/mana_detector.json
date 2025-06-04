@@ -1,26 +1,49 @@
 {
     "variants": {
-      "facing=north": {
+      "detecting_mana=false,facing=north": {
         "model": "advanced-mana:block/mana_detector"
       },
-      "facing=south": {
+      "detecting_mana=false,facing=south": {
         "model": "advanced-mana:block/mana_detector",
         "y": 180
       },
-      "facing=west": {
+      "detecting_mana=false,facing=west": {
         "model": "advanced-mana:block/mana_detector",
         "y": 270
       },
-      "facing=east": {
+      "detecting_mana=false,facing=east": {
         "model": "advanced-mana:block/mana_detector",
         "y": 90
       },
-      "facing=up": {
+      "detecting_mana=false,facing=up": {
         "model": "advanced-mana:block/mana_detector",
         "x": 270
       },
-      "facing=down": {
+      "detecting_mana=false,facing=down": {
         "model": "advanced-mana:block/mana_detector",
+        "x": 90
+      },
+      "detecting_mana=true,facing=north": {
+        "model": "advanced-mana:block/mana_detector_active"
+      },
+      "detecting_mana=true,facing=south": {
+        "model": "advanced-mana:block/mana_detector_active",
+        "y": 180
+      },
+      "detecting_mana=true,facing=west": {
+        "model": "advanced-mana:block/mana_detector_active",
+        "y": 270
+      },
+      "detecting_mana=true,facing=east": {
+        "model": "advanced-mana:block/mana_detector_active",
+        "y": 90
+      },
+      "detecting_mana=true,facing=up": {
+        "model": "advanced-mana:block/mana_detector_active",
+        "x": 270
+      },
+      "detecting_mana=true,facing=down": {
+        "model": "advanced-mana:block/mana_detector_active",
         "x": 90
       }
     }
