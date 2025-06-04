@@ -5,8 +5,8 @@
       "south": "advanced-mana:block/mana_detector_side_active",
       "east": "advanced-mana:block/mana_detector_side_active",
       "west": "advanced-mana:block/mana_detector_side_active",
-      "up": "advanced-mana:block/mana_detector_side",
-      "down": "advanced-mana:block/mana_detector_side",
+      "up": "advanced-mana:block/mana_detector_side_active",
+      "down": "advanced-mana:block/mana_detector_side_active",
       "particle": "advanced-mana:block/mana_detector_side_active"
     }
-  }
+}

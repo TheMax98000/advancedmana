@@ -3,7 +3,6 @@ package com.tomokisan.advancedmana.block;
 import com.tomokisan.advancedmana.block.entity.ManaDetectorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -30,43 +30,45 @@ import net.minecraft.world.phys.shapes.Shapes;
 
 public class ManaDetectorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
+    public static final BooleanProperty DETECTING_MANA = BooleanProperty.create("detecting_mana");
 
     public ManaDetectorBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.METAL)
                 .strength(3.0F, 6.0F)
-                .requiresCorrectToolForDrops());
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+                .requiresCorrectToolForDrops()
+                .lightLevel(state -> state.getValue(DETECTING_MANA) ? 3 : 0)); // Lumière bleue niveau torche
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(DETECTING_MANA, false));
     }
 
-    // Utiliser la forme complète du bloc pour permettre l'attachement des modems
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return Shapes.block(); // Forme complète 16x16x16
+        return Shapes.block();
     }
 
-    // Assurer que les modems peuvent s'attacher sur toutes les faces
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return Shapes.block(); // Collision complète pour l'attachement
+        return Shapes.block();
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+        return this.defaultBlockState()
+                .setValue(FACING, context.getNearestLookingDirection().getOpposite())
+                .setValue(DETECTING_MANA, false);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, DETECTING_MANA);
     }
 
-    // Interaction avec le bloc (clic droit)
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
         
-        // Si le joueur tient un item ET fait sneak (Shift+clic), toujours afficher les infos
         if (player.isShiftKeyDown()) {
             if (!level.isClientSide) {
                 BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -74,19 +76,18 @@ public class ManaDetectorBlock extends BaseEntityBlock {
                     player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
                         "Mana: " + manaDetector.getMana() + 
                         "/" + manaDetector.getManaCap() + 
-                        " | Valid: " + manaDetector.hasValidMana()
+                        " | Valid: " + manaDetector.hasValidMana() +
+                        " | Glowing: " + state.getValue(DETECTING_MANA)
                     ));
                 }
             }
             return InteractionResult.SUCCESS;
         }
         
-        // Si le joueur tient un item (sans Shift), permettre le placement
         if (!heldItem.isEmpty()) {
             return InteractionResult.PASS;
         }
         
-        // Si mains vides, afficher les infos
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof ManaDetectorBlockEntity manaDetector) {
@@ -101,19 +102,16 @@ public class ManaDetectorBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    // Création du BlockEntity
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ManaDetectorBlockEntity(pos, state);
     }
 
-    // Gestion du ticker pour que le BlockEntity puisse fonctionner
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return createTickerHelper(blockEntityType, com.tomokisan.advancedmana.AdvancedMana.MANA_DETECTOR_BLOCK_ENTITY, ManaDetectorBlockEntity::tick);
     }
 
-    // Rendu normal (pas d'entité invisible)
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;

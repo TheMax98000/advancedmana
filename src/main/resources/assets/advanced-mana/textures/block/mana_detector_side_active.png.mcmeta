@@ -1,14 +1,19 @@
 {
   "animation": {
-    "frametime": 20,
+    "frametime": 10,
     "interpolate": true,
-    "frames": [
-      0,
-      1,
-      2,
-      3,
-      2,
-      1
+    "frames": [0, 1, 2, 3, 2, 1]
+  },
+  "texture": {
+    "blur": false,
+    "clamp": false,
+    "mipmaps": [
+      {
+        "emissive": {
+          "blur": false,
+          "clamp": false
+        }
+      }
     ]
   }
 }
