@@ -53,26 +53,34 @@ public class ManaDetectorBlockEntity extends BlockEntity {
             }
         }
         
-        if (newMana != this.mana || newManaCap != this.manaCap) {
-            this.mana = newMana;
-            this.manaCap = newManaCap;
+        // CORRECTION : Toujours mettre à jour les valeurs
+        this.mana = newMana;
+        this.manaCap = newManaCap;
+        
+        // Calculer l'état de détection actuel
+        boolean nowDetectingMana = this.mana > 0 || this.manaCap > 0;
+        
+        // CORRECTION : Vérifier aussi l'état du blockstate pour être sûr
+        BlockState currentState = level.getBlockState(pos);
+        boolean blockStateDetecting = currentState.getValue(com.tomokisan.advancedmana.block.ManaDetectorBlock.DETECTING_MANA);
+        
+        // Mettre à jour si l'état a changé OU si le blockstate est désynchronisé
+        if (nowDetectingMana != this.wasDetectingMana || nowDetectingMana != blockStateDetecting) {
+            this.wasDetectingMana = nowDetectingMana;
             
-            boolean nowDetectingMana = this.mana > 0 || this.manaCap > 0;
+            BlockState newState = currentState.setValue(com.tomokisan.advancedmana.block.ManaDetectorBlock.DETECTING_MANA, nowDetectingMana);
+            level.setBlock(pos, newState, 3);
+            level.getLightEngine().checkBlock(pos);
+            setChanged();
+            level.sendBlockUpdated(pos, newState, newState, 3);
             
-            if (nowDetectingMana != this.wasDetectingMana) {
-                this.wasDetectingMana = nowDetectingMana;
-                
-                BlockState newState = state.setValue(com.tomokisan.advancedmana.block.ManaDetectorBlock.DETECTING_MANA, nowDetectingMana);
-                level.setBlock(pos, newState, 3);
-                level.getLightEngine().checkBlock(pos);
-                setChanged();
-                level.sendBlockUpdated(pos, newState, newState, 3);
-                
-                AdvancedMana.LOGGER.info("ManaDetector at {} detection state changed: {}", pos, nowDetectingMana);
-            }
-            
-            AdvancedMana.LOGGER.info("ManaDetector at {} read: mana={}, manaCap={}", pos, mana, manaCap);
+            AdvancedMana.LOGGER.info("ManaDetector at {} detection state changed: {} (mana={}, manaCap={})", 
+                pos, nowDetectingMana, newMana, newManaCap);
         }
+        
+        // Log pour debug (commentez cette ligne si trop de spam)
+        // AdvancedMana.LOGGER.info("ManaDetector at {} read: mana={}, manaCap={}, detecting={}", 
+        //     pos, mana, manaCap, nowDetectingMana);
     }
     
     public int getMana() {
@@ -93,6 +101,7 @@ public class ManaDetectorBlockEntity extends BlockEntity {
         tag.putInt("mana", mana);
         tag.putInt("manaCap", manaCap);
         tag.putInt("TickCounter", tickCounter);
+        tag.putBoolean("WasDetectingMana", wasDetectingMana); // CORRECTION : Sauvegarder l'état
     }
     
     @Override
@@ -101,6 +110,7 @@ public class ManaDetectorBlockEntity extends BlockEntity {
         mana = tag.getInt("mana");
         manaCap = tag.getInt("manaCap");
         tickCounter = tag.getInt("TickCounter");
+        wasDetectingMana = tag.getBoolean("WasDetectingMana"); // CORRECTION : Charger l'état
     }
     
     @Override
@@ -108,6 +118,7 @@ public class ManaDetectorBlockEntity extends BlockEntity {
         CompoundTag tag = super.getUpdateTag();
         tag.putInt("mana", mana);
         tag.putInt("manaCap", manaCap);
+        tag.putBoolean("WasDetectingMana", wasDetectingMana); // CORRECTION : Synchroniser l'état
         return tag;
     }
     
